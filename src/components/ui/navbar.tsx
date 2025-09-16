@@ -49,7 +49,7 @@ export default function Navbar() {
               onClick={toggleMenu}
               className="inline-flex items-center justify-center p-2"
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? <X className="h-6 w-6 text-white" /> : <Menu className="h-6 w-6 text-white" />}
             </Button>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { Card, CardHeader, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
+import { blogList } from "../lib/constants"
 
 interface BlogSectionProps {
     section?: string
@@ -8,38 +9,10 @@ interface BlogSectionProps {
 }
 
 const BlogSection = ({ section, title }: BlogSectionProps) => {
-    const blogList = [
-        {
-            id: 1,
-            title: "KAPAN SEBAIKNYA HENTIKAN PENGGUNAAN LILIN AROMATERAPI?",
-            description:
-                "Lilin aromaterapi membantu relaksasi, tapi ada saat-saat tertentu di mana sebaiknya Anda tidak menggunakannya demi keamanan. Pahami kondisi yang perlu diperhatikan, termasuk saat mengalami sesak napas atau asma.",
-            image: "/assets/news-1.jpeg",
-            date: "JAN 15",
-            author: "By KKN UII Unit 24",
-        },
-        {
-            id: 2,
-            title: "LILIN AROMATERAPI UNTUK MENTAL LEBIH TENANG",
-            description:
-                "Stres dan kecemasan sering kali menjadi penghalan untuk tidur nyenyak. Pelajari bagaimana aroma-aroma tertentu dapat memengaruhi kondisi psikologis Anda, membantu menenangkan pikiran, dan menciptakan ruang yang ideal untuk relaksasi.",
-            image: "/assets/news-2.jpeg",
-            date: "JAN 10",
-            author: "By KKN UII Unit 24",
-        },
-        {
-            id: 3,
-            title: "WHY YOU SHOULD ALWAYS FIRST",
-            description:
-                "Mengapa memilih lilin aromaterapi dari bahan daur ulang adalah pilihan terbaik untuk lingkungan dan kesehatan keluarga Anda.",
-            image: "/assets/news-3.jpeg",
-            date: "JAN 05",
-            author: "By KKN UII Unit 24",
-        },
-    ]
+    
     return (
         <div className="flex w-full bg-gradient-to-b from-black to-gray-900">
-            <div className="container mx-auto py-14">
+            <div className="container mx-auto px-4 py-14">
                 <div className="flex flex-col justify-center items-center gap-4 h-full">
                     <p className="text-sm font-medium text-amber-500 tracking-wider uppercase">{section}</p>
                     <h1 className="text-4xl text-white font-medium leading-tight sm:leading-tight md:leading-tight text-center">
