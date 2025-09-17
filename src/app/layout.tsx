@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/ui/navbar";
 import { cn, heliosfont } from "@/lib/utils";
 import { Inter } from 'next/font/google'
-import Footer from "@/components/ui/footer";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
@@ -22,11 +20,9 @@ export default function RootLayout({
       <body
         className={cn("font-sans", heliosfont.variable, inter.variable)}
       >
-        <Navbar/>
         <main>
           {children}
         </main>
-        <Footer/>
       </body>
     </html>
   );

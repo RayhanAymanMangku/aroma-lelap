@@ -6,6 +6,11 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+export const formatRupiah = (value: string) => {
+  const numberString = value.replace(/[^,\d]/g, "").toString();
+  const formatted = numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  return formatted;
+};
 
 export const heliosfont = localFont({
   src: [
