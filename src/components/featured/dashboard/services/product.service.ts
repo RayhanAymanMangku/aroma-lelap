@@ -39,6 +39,37 @@ export async function countAllProducts() {
     }
 }
 
+export async function countAllStock() {
+    try {
+        const aggregation = await prismaDb.product.aggregate({
+            _sum: {
+                stock: true, // Menjumlahkan semua nilai di kolom 'stock'
+            },
+        });
+
+        return aggregation._sum.stock ?? 0;
+
+    } catch (error) {
+        console.log(error)
+        return;
+    }
+}
+
+export async function inventoryValueCount() {
+    try {
+        const data = await prismaDb.product.aggregate({
+            _sum: {
+                price: true,
+            },
+        });
+
+        return data._sum.price ?? 0
+    } catch (error) {
+        console.log(error)
+        return;
+    }
+}
+
 export async function getProductById(id: string) {
     try {
         const data = await prismaDb.product.findUnique({

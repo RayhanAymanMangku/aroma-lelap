@@ -15,6 +15,7 @@ import { ProductType } from '../types/Product'
 import { deleteProductById, getAllProducts } from '../services/product.service'
 import Image from 'next/image'
 import ConfirmModal from './confirm-modal'
+import { Badge } from '@/components/ui/badge'
 
 const DashboardProductTableList = () => {
     const [products, setProducts] = useState<ProductType[]>([])
@@ -53,6 +54,16 @@ const DashboardProductTableList = () => {
         }
     }
 
+    const getStockStatus = (stock: number) => {
+        if (stock === 0) {
+            return { text: 'Out of Stock', variant: 'destructive' as const };
+        }
+        if (stock <= 10) {
+            return { text: 'Low Stock', variant: 'secondary' as const };
+        }
+        return { text: 'Available', variant: 'default' as const };
+    };
+
     return (
         <>
             <div className="overflow-hidden rounded-sm">
@@ -64,44 +75,51 @@ const DashboardProductTableList = () => {
                             <TableHead>Name</TableHead>
                             <TableHead>Flavour</TableHead>
                             <TableHead>Stock</TableHead>
+                            <TableHead>Status</TableHead>
                             <TableHead>Price</TableHead>
                             <TableHead>Actions</TableHead>
                         </TableRow>
                     </TableHeader>
-                    <TableBody>
+                   <TableBody>
                         {products.length > 0 ? (
-                            products.map((item) => (
-                                <TableRow key={item.id}>
-                                    <TableCell>{item.id.slice(0, 8)}</TableCell>
-                                    <TableCell>
-                                        <Image
-                                            src={item.imageUrl}
-                                            alt={item.name}
-                                            width={40}
-                                            height={40}
-                                            className='rounded-md object-cover w-10 h-10 shadow-sm'
-                                        />
-                                    </TableCell>
-                                    <TableCell>{item.name}</TableCell>
-                                    <TableCell>{item.flavour}</TableCell>
-                                    <TableCell>{item.stock}</TableCell>
-                                    <TableCell>{item.price}</TableCell>
-                                    <TableCell className='flex gap-2'>
-                                        <Link href={`/dashboard/products/edit/${item.id}`}>
-                                            <Button variant="outline" size="icon">
-                                                <Edit className="w-4 h-4" />
+                            products.map((item) => {
+                                const status = getStockStatus(item.stock);
+                                return (
+                                    <TableRow key={item.id}>
+                                        <TableCell>{item.id.slice(0, 8)}</TableCell>
+                                        <TableCell>
+                                            <Image
+                                                src={item.imageUrl}
+                                                alt={item.name}
+                                                width={40}
+                                                height={40}
+                                                className='rounded-md object-cover w-10 h-10 shadow-sm'
+                                            />
+                                        </TableCell>
+                                        <TableCell>{item.name}</TableCell>
+                                        <TableCell>{item.flavour}</TableCell>
+                                        <TableCell>{item.stock}</TableCell>
+                                        <TableCell>
+                                            <Badge variant={status.variant}>{status.text}</Badge>
+                                        </TableCell>
+                                        <TableCell>Rp{item.price.toLocaleString('id-ID')}</TableCell>
+                                        <TableCell className='flex gap-2'>
+                                            <Link href={`/dashboard/products/edit/${item.id}`}>
+                                                <Button variant="outline" size="icon">
+                                                    <Edit className="w-4 h-4" />
+                                                </Button>
+                                            </Link>
+                                            <Button variant="destructive" size="icon" onClick={() => handleOpenDeleteModal(item.id)}>
+                                                <Trash className="w-4 h-4" />
                                             </Button>
-                                        </Link>
-
-                                        <Button variant="destructive" size="icon" onClick={() => handleOpenDeleteModal(item.id)}>
-                                            <Trash className="w-4 h-4" />
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
-                            ))
+                                        </TableCell>
+                                    </TableRow>
+                                )
+                            })
                         ) : (
                             <TableRow>
-                                <TableCell colSpan={7} className="text-center text-gray-400">
+                                {/* 4. Sesuaikan colSpan karena ada penambahan kolom */}
+                                <TableCell colSpan={8} className="text-center text-gray-400">
                                     No data available
                                 </TableCell>
                             </TableRow>
