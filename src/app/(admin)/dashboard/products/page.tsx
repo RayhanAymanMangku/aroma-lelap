@@ -5,15 +5,15 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div className="container">
-      <div className="flex flex-col gap-4">
-        <div className="flex w-full justify-end">
+    <div className="container max-w-full flex flex-col gap-4">
+        <header className="flex w-full justify-end items-center">
           <Link href="/dashboard/products/create">
             <Button className='bg-amber-500 text-white hover:bg-amber-600 text-xs'>Add Product</Button>
           </Link>
-        </div>
-        <DashboardProductTableList />
-      </div>
+        </header>
+        <section>
+          <DashboardProductTableList />
+        </section>
     </div>
   )
 }

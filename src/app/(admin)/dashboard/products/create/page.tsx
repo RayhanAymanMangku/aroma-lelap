@@ -82,8 +82,8 @@ const ProductCreatePage = () => {
 
             const productData: ProductForCreate = {
                 ...formData,
-                price: parseInt(formData.price, 0),
-                stock: parseInt(formData.stock, 0),
+                price: parseInt(formData.price),
+                stock: parseInt(formData.stock),
                 imageUrl: uploadedImageUrl
             };
 
@@ -91,7 +91,7 @@ const ProductCreatePage = () => {
             await createProduct(productData);
 
             alert("Produk berhasil ditambahkan!");
-            router.push("/dashboard");
+            router.push("/dashboard/products");
 
         } catch (err) {
             console.error("Submission failed:", err);
@@ -152,7 +152,7 @@ const ProductCreatePage = () => {
                 </div>
                 {/* Tombol Submit */}
                 {error && <p className="text-sm text-red-600 bg-red-100 p-3 rounded-sm">{error}</p>}
-                <Button type="submit" disabled={isLoading || selectedImages.length === 0} className="bg-orange-500 text-white hover:bg-orange-700 disabled:bg-gray-400 disabled:cursor-not-allowed">
+                <Button type="submit" disabled={isLoading || selectedImages.length === 0} className="bg-amber-500 text-white hover:bg-amber-700 disabled:bg-gray-400 disabled:cursor-not-allowed">
                     {isLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Uploading...</> : "Upload Product"}
                 </Button>
             </form>

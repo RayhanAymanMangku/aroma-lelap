@@ -5,16 +5,20 @@ import { ProductForCreate, ProductType } from "../types/Product";
 
 const prismaDb = prisma;
 
+const property = {
+    id: true,
+    name: true,
+    imageUrl: true,
+    flavour: true,
+    price: true,
+    stock: true
+}
+
 export async function getAllProducts() {
     try {
         const data = await prismaDb.product.findMany({
             select: {
-                id: true,
-                name: true,
-                imageUrl: true,
-                flavour: true,
-                price: true,
-                stock: true
+                ...property
             }
         });
         return data;
@@ -23,7 +27,16 @@ export async function getAllProducts() {
         console.log(error)
         return;
     }
+}
 
+export async function countAllProducts() {
+    try {
+        const data = await prismaDb.product.count()
+        return data;
+    } catch (error) {
+        console.log(error)
+        return;
+    }
 }
 
 export async function getProductById(id: string) {
@@ -31,12 +44,7 @@ export async function getProductById(id: string) {
         const data = await prismaDb.product.findUnique({
             where: { id: id },
             select: {
-                id: true,
-                name: true,
-                imageUrl: true,
-                flavour: true,
-                price: true,
-                stock: true
+                ...property
             }
         });
         return data;

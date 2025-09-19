@@ -18,7 +18,7 @@ interface ProductEditProps {
 }
 
 const DashboardProductEditForm = ({ initialData }: ProductEditProps) => {
-    // --- PERUBAHAN 2: State untuk gambar yang sudah ada ---
+    // State untuk gambar yang sudah ada 
     const [existingImageUrl, setExistingImageUrl] = useState<string | null>(initialData.imageUrl);
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -34,7 +34,6 @@ const DashboardProductEditForm = ({ initialData }: ProductEditProps) => {
     const [error, setError] = useState<string | null>(null);
     const router = useRouter();
 
-    // --- PERUBAHAN 3: useEffect diperbaiki ---
     useEffect(() => {
         if (initialData) {
             setFormData({
@@ -46,7 +45,7 @@ const DashboardProductEditForm = ({ initialData }: ProductEditProps) => {
             });
             setExistingImageUrl(initialData.imageUrl);
         }
-    }, [initialData]); // Tambahkan dependency array
+    }, [initialData]); 
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -98,7 +97,6 @@ const DashboardProductEditForm = ({ initialData }: ProductEditProps) => {
                 return;
             }
 
-            // Siapkan data untuk dikirim ke database
             const productDataToUpdate = {
                 id: initialData.id,
                 name: formData.name,
@@ -108,22 +106,19 @@ const DashboardProductEditForm = ({ initialData }: ProductEditProps) => {
                 imageUrl: finalImageUrl,
             };
 
-            // Panggil fungsi updateProduct
             await updateProduct(initialData.id, productDataToUpdate);
 
-            // Jika berhasil mengganti gambar, hapus gambar lama dari storage
             if (newImageUrl && initialData.imageUrl) {
                 await deleteImage(initialData.imageUrl);
             }
 
             alert("Produk berhasil diperbarui!");
-            router.push("/dashboard");
+            router.push("/dashboard/products");
 
         } catch (err) {
             console.error("Submission failed:", err);
             setError(err instanceof Error ? err.message : "Terjadi kesalahan. Silakan coba lagi.");
 
-            // Jika gagal, dan gambar baru sudah terunggah, hapus lagi gambar baru itu
             if (newImageUrl) {
                 await deleteImage(newImageUrl);
             }
@@ -154,9 +149,8 @@ const DashboardProductEditForm = ({ initialData }: ProductEditProps) => {
                 <div>
                     <Label htmlFor="image">Image (Ganti gambar jika perlu)</Label>
                     <Input id="image" type="file" accept="image/*" onChange={handleImageChange} />
-                    {/* --- PERUBAHAN 5: Tampilkan gambar lama atau preview gambar baru --- */}
                     <div className="mt-4">
-                        <div className="relative group w-full max-w-xs mx-auto">
+                        <div className="relative group w-full max-w-xs">
                             {imagePreview ? (
                                 <>
                                     <p className="text-center text-sm mb-2">Preview Gambar Baru:</p>
@@ -175,7 +169,7 @@ const DashboardProductEditForm = ({ initialData }: ProductEditProps) => {
                     </div>
                 </div>
                 {error && <p className="text-sm text-red-600 bg-red-100 p-3 rounded-sm">{error}</p>}
-                <Button type="submit" disabled={isSubmitting} className="bg-orange-500 text-white hover:bg-orange-700 disabled:bg-gray-400 disabled:cursor-not-allowed">
+                <Button type="submit" disabled={isSubmitting} className="bg-amber-500 text-white hover:bg-amber-700 disabled:bg-gray-400 disabled:cursor-not-allowed">
                     {isSubmitting ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Updating...</> : "Update Product"}
                 </Button>
             </form>

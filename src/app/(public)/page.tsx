@@ -3,8 +3,10 @@ import BlogSection from "@/components/featured/components/blog-section";
 import MainContent from "@/components/featured/components/main-content";
 import ProductCarousel from "@/components/featured/components/product-carousel";
 import QualitySection from "@/components/featured/components/quality-section";
+import { getAllProducts } from "@/components/featured/dashboard/services/product.service";
 
-export default function Home() {
+export default async function Home() {
+  const products = await getAllProducts()
   return (
    <div className="flex flex-col min-h-screen">
       <section>
@@ -22,7 +24,9 @@ export default function Home() {
         />
       </section>
       <section>
-        <ProductCarousel/>
+        <ProductCarousel
+        products={products || []}
+        />
       </section>
       <section>
         <AboutSection/>
